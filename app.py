@@ -22,15 +22,22 @@ st.set_page_config(
 # =========================
 # KONFIG: GitHub + lokalny plik
 # =========================
-# Lokalny cache (opcjonalnie — ułatwia działanie lokalne)
+# Lokalny cache
 DATA_FILE = "gym_progress.json"
 
-# Konfiguracja z secrets (zalecane)
-GITHUB_TOKEN = st.secrets.get("github_token", None)
-REPO_OWNER = st.secrets.get("repo_owner", "")
-REPO_NAME = st.secrets.get("repo_name", "")
-REPO_BRANCH = st.secrets.get("repo_branch", "main")
-REPO_FILE_PATH = st.secrets.get("repo_file_path", "gym_progress.json")
+# Konfiguracja z secrets (opcjonalne)
+try:
+    GITHUB_TOKEN = st.secrets.get("github_token", None)
+    REPO_OWNER = st.secrets.get("repo_owner", "")
+    REPO_NAME = st.secrets.get("repo_name", "")
+    REPO_BRANCH = st.secrets.get("repo_branch", "main")
+    REPO_FILE_PATH = st.secrets.get("repo_file_path", "gym_progress.json")
+except:
+    GITHUB_TOKEN = None
+    REPO_OWNER = ""
+    REPO_NAME = ""
+    REPO_BRANCH = "main"
+    REPO_FILE_PATH = "gym_progress.json"
 
 # Pomocnicze: walidacja konfiguracji GitHub
 def github_config_ok():
@@ -51,13 +58,13 @@ def _gh_contents_url():
 EXERCISE_IMAGES = {
     "Wyciskanie na ławeczce poziomej": "lawka.png",
     "Brzuszki na maszynie": "brzuszki.png",
-    "Boczne zgięcia tułowia na ławce rzymskiej": "brzuszki-rzymska.png",
-    "Skłony tułowia na ławce skośnej": "brzuszki-lawka.png",
+    "Boczne zginania tuławia na ławce rzymskiej": "brzuszki-rzymska.png",
+    "Skłony tuławia na ławce skośnej": "brzuszki-lawka.png",
     "Wznosy zgiętych nóg w zwisie na drążku": "brzuch-wznosy.png",
     "Wypychanie nóg (Leg Press)": "legpress.png",
     "Uginanie ramion z hantlami z supinacją": "biceps1.png",
-    "Podciąganie sztangi wzdłuż tułowia": "barki.png",
-    "Odwrotne rozpiętki na maszynie": "barki-rozpietki.png",
+    "Podciąganie sztangi wzdłuż tuławia": "barki.png",
+    "Odwrotne rozpietki na maszynie": "barki-rozpietki.png",
     "Triceps - wyciskanie francuskie": "triceps.png",
     "Przenoszenie hantla za głowę w leżeniu": "wioslowanie.png",
     "Wyciskanie na suwnicy Smitha": "podciaganie.png",
@@ -71,16 +78,16 @@ EXERCISE_IMAGES = {
     "Odwodzenie nóg siedząc": "nogi-odwodzenie.png",
     "Wspięcia na palce stojąc na maszynie": "nogi-lydki2.png",
     "Wspięcia na palce siedząc na maszynie": "nogi-lydki.png",
-    "Skręty tułowia na maszynie": "brzuch-skretytulowia.png",
+    "Skręty tuławia na maszynie": "brzuch-skretytulowia.png",
     "Plank": "brak.png",
     "Wyciskanie hantli nad głowę siedząc": "barki-wyciskaniehantli.png",
     "Wyciskanie nad głowę na maszynie": "barki-wyciskaniemaszyna.png",
     "Wznosy ramion bokiem z hantlami": "barki-wznosyzhantlami.png",
     "Wznosy ramion bokiem na maszynie": "barki-wznosymaszyna.png",
-    "Podciąganie hantli wzdłuż tułowia": "barki-podciaganiehantli.png",
+    "Podciąganie hantli wzdłuż tuławia": "barki-podciaganiehantli.png",
     "Podciąganie nachwytem ze wspomaganiem": "plecy-podciaganie.png",
     "Wiosłowanie na wyciągu dolnym": "plecy-wioslowanie.png",
-    "Unoszenie tułowia na ławce rzymskiej": "plecy-unoszenietulowia.png",
+    "Unoszenie tuławia na ławce rzymskiej": "plecy-unoszenietulowia.png",
     "Ściąganie drążka wyciągu górnego": "plecy-sciaganie.png",
     "Uginanie przedramion ze sztangą łamaną": "biceps2.png",
     "Uginanie ramienia siedząc na modlitewniku": "biceps3.png",
@@ -125,27 +132,27 @@ WEEKLY_PLAN = {
         "color": "#FFB347",
         "exercises": [
             "Brzuszki na maszynie",
-            "Skręty tułowia na maszynie",
+            "Skręty tuławia na maszynie",
             "Wznosy zgiętych nóg w zwisie na drążku",
-            "Boczne zgięcia tułowia na ławce rzymskiej",
-            "Skłony tułowia na ławce skośnej"
+            "Boczne zginania tuławia na ławce rzymskiej",
+            "Skłony tuławia na ławce skośnej"
         ]
     },
     "Czwartek": {
         "title": "Czwartek: PLECY & BARKI",
         "color": "#FFB347",
         "exercises": [
-            "Podciąganie sztangi wzdłuż tułowia",
+            "Podciąganie sztangi wzdłuż tuławia",
             "Wyciskanie hantli nad głowę siedząc",
             "Wznosy ramion bokiem z hantlami",
             "Wyciskanie nad głowę na maszynie",
             "Wznosy ramion bokiem na maszynie",
-            "Odwrotne rozpiętki na maszynie",
-            "Podciąganie hantli wzdłuż tułowia",
+            "Odwrotne rozpietki na maszynie",
+            "Podciąganie hantli wzdłuż tuławia",
             "Podciąganie nachwytem ze wspomaganiem",
             "Wiosłowanie na wyciągu dolnym",
             "Ściąganie drążka wyciągu górnego",
-            "Unoszenie tułowia na ławce rzymskiej"
+            "Unoszenie tuławia na ławce rzymskiej"
         ]
     },
     "Piątek": {
@@ -182,24 +189,24 @@ EXERCISES = {
     "Wyciskanie na suwnicy Smitha": {"color": "#4ECDC4", "description": "Mięśnie klatki piersiowej"},
     "Przenoszenie hantla za głowę w leżeniu": {"color": "#4ECDC4", "description": "Mięśnie klatki piersiowej"},
     "Brzuszki na maszynie": {"color": "#45B7D1", "description": "Mięśnie brzucha"},
-    "Skręty tułowia na maszynie": {"color": "#45B7D1", "description": "Mięśnie skośne brzucha"},
-    "Boczne zgięcia tułowia na ławce rzymskiej": {"color": "#45B7D1", "description": "Mięśnie skośne brzucha"},
-    "Skłony tułowia na ławce skośnej": {"color": "#45B7D1", "description": "Mięsień prosty brzucha"},
+    "Skręty tuławia na maszynie": {"color": "#45B7D1", "description": "Mięśnie skośne brzucha"},
+    "Boczne zginania tuławia na ławce rzymskiej": {"color": "#45B7D1", "description": "Mięśnie skośne brzucha"},
+    "Skłony tuławia na ławce skośnej": {"color": "#45B7D1", "description": "Mięsień prosty brzucha"},
     "Wznosy ramion bokiem z hantlami": {"color": "#96CEB4", "description": "Boczny (środkowy) akton mięśnia naramiennego "},
     "Wyciskanie hantlii": {"color": "#4ECDC4", "description": "Mięśnie klatki piersiowej"},
     "Rozpietki na maszynie": {"color": "#4ECDC4", "description": "Mięśnie klatki piersiowej"},
     "Pompki na poręczach ze wspomaganiem": {"color": "#4ECDC4", "description": "Mięśnie klatki piersiowej"},
     "Wznosy zgiętych nóg w zwisie na drążku": {"color": "#45B7D1", "description": "Mięsień prosty brzucha"},
-    "Podciąganie sztangi wzdłuż tułowia": {"color": "#96CEB4", "description": "Boczny i przedni akton mięśnia naramiennego"},
+    "Podciąganie sztangi wzdłuż tuławia": {"color": "#96CEB4", "description": "Boczny i przedni akton mięśnia naramiennego"},
     "Wyciskanie hantli nad głowę siedząc": {"color": "#96CEB4", "description": "Przedni akton mięśnia naramiennego"},
     "Wyciskanie nad głowę na maszynie": {"color": "#96CEB4", "description": "Przedni akton mięśnia naramiennego"},
     "Wznosy ramion bokiem na maszynie": {"color": "#96CEB4", "description": "Boczny (środkowy) akton mięśnia naramiennego"},
-    "Odwrotne rozpiętki na maszynie": {"color": "#96CEB4", "description": "Tylny akton mięśnia naramiennego"},
-    "Podciąganie hantli wzdłuż tułowia": {"color": "#96CEB4", "description": "Boczny i przedni akton mięśnia naramiennego"},
+    "Odwrotne rozpietki na maszynie": {"color": "#96CEB4", "description": "Tylny akton mięśnia naramiennego"},
+    "Podciąganie hantli wzdłuż tuławia": {"color": "#96CEB4", "description": "Boczny i przedni akton mięśnia naramiennego"},
     "Podciąganie nachwytem ze wspomaganiem": {"color": "#FFEAA7", "description": "Mięsień najszerszy grzbietu"},
     "Wiosłowanie na wyciągu dolnym": {"color": "#FFEAA7", "description": "Mięsień czworoboczny (szczególnie część środkowa i dolna)"},
     "Ściąganie drążka wyciągu górnego": {"color": "#FFEAA7", "description": "Mięsień najszerszy grzbietu"},
-    "Unoszenie tułowia na ławce rzymskiej": {"color": "#FFEAA7", "description": "Mięśnie prostowniki grzbietu"},
+    "Unoszenie tuławia na ławce rzymskiej": {"color": "#FFEAA7", "description": "Mięśnie prostowniki grzbietu"},
     "Uginanie ramion z hantlami z supinacją": {"color": "#FFEAA7", "description": "Mięsień dwugłowy ramienia"},
     "Uginanie przedramion ze sztangą łamaną": {"color": "#FFEAA7", "description": "Mięsień dwugłowy ramienia"},
     "Uginanie ramienia siedząc na modlitewniku": {"color": "#FFEAA7", "description": "Mięsień ramienny"},
@@ -317,6 +324,15 @@ st.markdown("""
     min-width: 120px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
+.debug-info {
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 12px;
+    color: #666;
+}
 @media (max-width: 768px) {
     .exercise-container {
         padding: 0.8rem;
@@ -375,12 +391,12 @@ def get_week_range():
 # GITHUB: wczytywanie i zapis
 # =========================
 def load_from_github() -> dict:
-    """Wczytaj JSON z GitHuba (gałąź/ścieżka z konfiguracji)."""
+    """Wczytaj JSON z GitHuba."""
     if not github_config_ok():
+        st.info("🔧 GitHub nie jest skonfigurowany - używam tylko lokalnego zapisu")
         return {}
     
     try:
-        # GET /contents/{path}?ref=branch
         url = _gh_contents_url() + f"?ref={REPO_BRANCH}"
         r = requests.get(url, headers=_gh_headers(), timeout=15)
         
@@ -391,23 +407,20 @@ def load_from_github() -> dict:
                 return json.loads(decoded)
             return {}
         elif r.status_code == 404:
-            # Plik nie istnieje — zwróć pusty słownik (utworzymy przy zapisie)
             return {}
         else:
-            st.warning(f"Nie udało się wczytać danych z GitHuba: {r.status_code}")
+            st.warning(f"⚠️ GitHub API błąd: {r.status_code}")
             return {}
     except Exception as e:
-        st.warning(f"Błąd połączenia z GitHub: {e}")
+        st.warning(f"⚠️ Błąd połączenia z GitHub: {e}")
         return {}
 
 def save_to_github(data_dict: dict, commit_message: str = "Update gym progress"):
-    """Zapis JSON do repo GitHub: tworzy plik, jeśli nie ma; aktualizuje, jeśli jest."""
+    """Zapis JSON do repo GitHub."""
     if not github_config_ok():
-        st.error("Brak konfiguracji GitHub w st.secrets — zapis tylko lokalny.")
         return False
     
     try:
-        # Najpierw pobierz SHA (jeśli plik istnieje)
         url = _gh_contents_url()
         get_resp = requests.get(url, headers=_gh_headers(), timeout=15)
         sha = get_resp.json().get("sha") if get_resp.status_code == 200 else None
@@ -421,62 +434,93 @@ def save_to_github(data_dict: dict, commit_message: str = "Update gym progress")
             "branch": REPO_BRANCH
         }
         if sha:
-            payload["sha"] = sha  # wymagane przy aktualizacji
+            payload["sha"] = sha
             
         put_resp = requests.put(url, headers=_gh_headers(), json=payload, timeout=15)
         if put_resp.status_code in (200, 201):
             return True
         else:
-            st.error(f"❌ Błąd zapisu do GitHuba: {put_resp.status_code} - {put_resp.text}")
+            st.error(f"❌ Błąd zapisu do GitHuba: {put_resp.status_code}")
             return False
     except Exception as e:
         st.error(f"❌ Wyjątek przy zapisie do GitHuba: {e}")
         return False
 
 # =========================
-# DANE: warstwa pośrednia (cache + fallback)
+# LOKALNE FUNKCJE ZAPISU/ODCZYTU
 # =========================
-@st.cache_data(show_spinner=False)
-def _initial_load_data():
-    """Jednorazowe wczytanie danych przy starcie sesji."""
-    # 1) Spróbuj z GitHuba
-    gh_data = load_from_github()
-    if gh_data:
-        return gh_data
-    
-    # 2) Fallback: lokalny plik (np. podczas pracy lokalnej)
-    if os.path.exists(DATA_FILE):
-        try:
+def load_from_local() -> dict:
+    """Wczytaj dane z lokalnego pliku JSON."""
+    try:
+        if os.path.exists(DATA_FILE):
             with open(DATA_FILE, "r", encoding="utf-8") as f:
-                return json.load(f)
-        except:
+                data = json.load(f)
+                st.info(f"📁 Wczytano {len(data)} ćwiczeń z lokalnego pliku")
+                return data
+        else:
+            st.info("📁 Lokalny plik nie istnieje - tworzę nowy")
             return {}
-    return {}
+    except Exception as e:
+        st.error(f"❌ Błąd odczytu lokalnego pliku: {e}")
+        return {}
 
+def save_to_local(data_dict: dict) -> bool:
+    """Zapisz dane do lokalnego pliku JSON."""
+    try:
+        # Tworzymy katalog jeśli nie istnieje
+        os.makedirs(os.path.dirname(DATA_FILE) if os.path.dirname(DATA_FILE) else ".", exist_ok=True)
+        
+        with open(DATA_FILE, "w", encoding="utf-8") as f:
+            json.dump(data_dict, f, ensure_ascii=False, indent=2)
+        
+        st.success(f"✅ Zapisano lokalnie do {DATA_FILE}")
+        return True
+    except Exception as e:
+        st.error(f"❌ Błąd zapisu lokalnego: {e}")
+        return False
+
+# =========================
+# GŁÓWNE FUNKCJE DANYCH
+# =========================
 def load_data():
-    # Trzymaj aktualny stan w session_state, żeby nie robić wielu requestów do GitHuba
+    """Główna funkcja wczytywania danych - najpierw GitHub, potem lokalnie."""
     if "data_store" not in st.session_state:
-        st.session_state.data_store = _initial_load_data()
+        # Próbuj najpierw GitHub
+        github_data = load_from_github()
+        if github_data:
+            st.session_state.data_store = github_data
+            st.success("✅ Wczytano dane z GitHub")
+        else:
+            # Fallback na lokalny plik
+            local_data = load_from_local()
+            st.session_state.data_store = local_data
+    
     return st.session_state.data_store
 
 def save_data(data, commit_message="Update gym progress"):
-    """Zapis lokalny (cache + plik) + commit do GitHuba."""
+    """Główna funkcja zapisu - lokalnie + GitHub."""
     # 1) Aktualizuj cache w sesji
     st.session_state.data_store = data
     
-    # 2) Opcjonalny zapis lokalny (przydatny lokalnie)
-    try:
-        with open(DATA_FILE, "w", encoding="utf-8") as f:
-            json.dump(data, f, ensure_ascii=False, indent=2)
-    except Exception:
-        # Ignoruj błąd lokalny w chmurze
-        pass
+    # 2) Zawsze zapisuj lokalnie
+    local_saved = save_to_local(data)
     
-    # 3) Zapis do GitHuba (tworzy plik, jeśli nie istnieje)
-    ok = save_to_github(data, commit_message=commit_message)
-    if ok:
-        st.toast("✅ Zapisano do GitHuba", icon="✅")
-    return ok
+    # 3) Próbuj zapisać do GitHuba (jeśli skonfigurowany)
+    github_saved = False
+    if github_config_ok():
+        github_saved = save_to_github(data, commit_message=commit_message)
+        if github_saved:
+            st.success("✅ Zapisano do GitHub")
+    
+    # Zwróć True jeśli przynajmniej jeden zapis się udał
+    success = local_saved or github_saved
+    
+    if success:
+        st.balloons()
+    else:
+        st.error("❌ Nie udało się zapisać danych!")
+    
+    return success
 
 # =========================
 # LOGIKA ĆWICZEŃ
